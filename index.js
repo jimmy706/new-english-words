@@ -52,12 +52,11 @@ async function getWordInfo(word) {
         const defineElement = await page.$eval(".def", ele => ele.innerHTML);
         const exampleElements = await page.$$eval("ul.examples > li > .x", (elements) => elements.map(ele => ele.innerHTML));
         const newWorld = new Word(word.name, defineElement, spellElement, exampleElements);
-        console.log("New Word: ");
-        console.warn('Store new word...')
+        // console.warn('Store new word...');
 
         createdWords.push(newWorld);
-        fs.writeFileSync(STORE_WORDS_PATH, JSON.stringify(createdWords));
-        console.log('Store complete!')
+        // fs.writeFileSync(STORE_WORDS_PATH, JSON.stringify(createdWords));
+        // console.log('Store complete!');
         return newWorld;
     }
     catch (err) {
