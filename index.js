@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'pug');
@@ -85,6 +85,28 @@ app.get("/random", function (req, res) {
                 define: word.define,
                 example: word.example
             })
+        }
+    })
+});
+
+app.get("/random-word", function (req, res) {
+    const randNumber = Math.floor(Math.random(MAX) * MAX);
+
+    fs.readFile(FILE_PATH, 'utf-8', async (err, data) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            const words = JSON.parse(data);
+            const randomWord = words[randNumber];
+            const word = await getWordInfo(randomWord);
+            console.log(word);
+            res.json({
+                name: word.name,
+                spell: word.spell,
+                define: word.define,
+                example: word.example
+            });
         }
     })
 })
